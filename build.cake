@@ -13,7 +13,7 @@ var configuration = Argument("configuration", "Release");
 // Define directories.
 var buildDir = Directory("./src/Metrics.Serilog/bin") + Directory(configuration);
 var testDir = Directory("./test/Metrics.Serilog.Tests/bin") + Directory(configuration);
-var nugetPackagesDir = Directory("./artefacts");
+var nugetPackagesDir = Directory("./artifacts");
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
