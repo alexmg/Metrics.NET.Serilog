@@ -6,7 +6,7 @@
     <authors>$author$</authors>
     <description>$description$</description>
     <language>en-US</language>
-    <projectUrl>http://github.com/alexmg/Metrics.NET.Serilog</projectUrl>
+    <projectUrl>https://github.com/alexmg/Metrics.NET.Serilog</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
     <tags>serilog metrics logging</tags>
   </metadata>
