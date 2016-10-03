@@ -37,7 +37,7 @@ var packageVersion = version + "-alpha";
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
-Setup(() =>
+Setup(context =>
 {
     Information("Target: " + target);
     Information("Configuration: " + configuration);
@@ -58,7 +58,7 @@ Task("Clean")
 {
     foreach (var dir in new[] {buildDir, testDir, artifactsDir})
     {
-        Information("Cleaning: " + dir);
+        Information("Cleaning " + dir);
         CleanDirectory(dir);
     }
 });
@@ -69,7 +69,7 @@ Task("Update-Version")
 {
     var versionFile = projectDir + Directory("Properties") + File("VersionInfo.cs");
 
-    Information("Updating version file: " + versionFile);
+    Information("Updating version file " + versionFile);
 
     CreateAssemblyInfo(versionFile, new AssemblyInfoSettings {
         Version = version,
@@ -83,6 +83,8 @@ Task("Update-AppVeyor-Version")
     .WithCriteria(() => isRunningOnAppVeyor)
     .Does(() =>
 {
+    Information("Updating AppVeyor build to " + packageVersion);
+
     AppVeyor.UpdateBuildVersion(packageVersion);
 });
 
@@ -104,21 +106,23 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./test/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings { NoResults = true });
+    var resultFile = artifactsDir + File("TestResults.xml");
+    var settings = new NUnit3Settings { Results = resultFile };
+    NUnit3("./test/**/bin/" + configuration + "/*.Tests.dll", settings);
 });
 
 Task("Pack-NuGet-Packages")
     .IsDependentOn("Run-Unit-Tests")
     .Does(() =>
 {
-    var nuGetPackSettings = new NuGetPackSettings
+    var settings = new NuGetPackSettings
     {
         OutputDirectory = artifactsDir,
         Properties = new Dictionary<string, string> {{ "Configuration", configuration }}
     };
 
     CreateDirectory(artifactsDir);
-    NuGetPack(projectFile, nuGetPackSettings);
+    NuGetPack(projectFile, settings);
 });
 
 Task("Upload-AppVeyor-Artifacts")
