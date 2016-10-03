@@ -1,4 +1,4 @@
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
+﻿#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -22,6 +22,7 @@ var artifactsDir = Directory("./artifacts");
 // Define files.
 var solutionFile = File("./" + projectName + ".sln");
 var projectFile = projectDir + File(projectName + ".csproj");
+var testResultFile = artifactsDir + File("TestResults.xml");
 
 // Get environmental information.
 var local = BuildSystem.IsLocalBuild;
@@ -106,8 +107,7 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    var resultFile = artifactsDir + File("TestResults.xml");
-    var settings = new NUnit3Settings { Results = resultFile };
+    var settings = new NUnit3Settings { Results = testResultFile };
     NUnit3("./test/**/bin/" + configuration + "/*.Tests.dll", settings);
 });
 
@@ -133,8 +133,12 @@ Task("Upload-AppVeyor-Artifacts")
     var artifacts = GetFiles(artifactsDir.Path + "/**/*.nupkg");
     foreach(var artifact in artifacts)
     {
+        Information("Uploading NuGet package: " + artifact);
         AppVeyor.UploadArtifact(artifact);
     }
+
+    Information("Uploading unit test results: " + testResultFile);
+    AppVeyor.UploadTestResults(testResultFile, AppVeyorTestResultsType.NUnit3);
 });
 
 //////////////////////////////////////////////////////////////////////
