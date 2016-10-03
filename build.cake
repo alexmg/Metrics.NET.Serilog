@@ -59,7 +59,6 @@ Task("Clean")
 {
     foreach (var dir in new[] {buildDir, testDir, artifactsDir})
     {
-        Information("Cleaning " + dir);
         CleanDirectory(dir);
     }
 });
@@ -70,7 +69,7 @@ Task("Update-Version")
 {
     var versionFile = projectDir + Directory("Properties") + File("VersionInfo.cs");
 
-    Information("Updating version file " + versionFile);
+    Information("Updating version file: " + versionFile);
 
     CreateAssemblyInfo(versionFile, new AssemblyInfoSettings {
         Version = version,
@@ -84,7 +83,7 @@ Task("Update-AppVeyor-Version")
     .WithCriteria(() => isRunningOnAppVeyor)
     .Does(() =>
 {
-    Information("Updating AppVeyor build to " + packageVersion);
+    Information("Updating AppVeyor build version: " + packageVersion);
 
     AppVeyor.UpdateBuildVersion(packageVersion);
 });
