@@ -10,6 +10,3 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 [assembly: InternalsVisibleTo("Metrics.Serilog.Tests")]
-
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
