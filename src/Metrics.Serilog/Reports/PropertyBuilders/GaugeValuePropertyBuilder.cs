@@ -10,7 +10,7 @@ namespace Metrics.Serilog.Reports.PropertyBuilders
         {
             if (double.IsNaN(value) || double.IsInfinity(value)) yield break;
 
-            yield return new LogEventProperty(nameof(GaugeValueSource.Value), new ScalarValue(value));
+            yield return new LogEventProperty(PropertyName.Value, new ScalarValue(value));
         }
     }
 }

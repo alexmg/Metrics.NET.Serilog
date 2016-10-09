@@ -12,7 +12,7 @@ namespace Metrics.Serilog.Reports
         {
             var properties = value.BuildProperties()
                 .Concat(unit.BuildProperties())
-                .Concat(rateUnit.BuildProperties(nameof(MeterValueSource.RateUnit)))
+                .Concat(rateUnit.BuildProperties(PropertyName.RateUnit))
                 .Concat(tags.BuildProperties());
 
             return properties;

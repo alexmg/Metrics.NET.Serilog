@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using Metrics.MetricData;
 using Metrics.Serilog.Reports;
 using NUnit.Framework;
 
@@ -17,10 +16,10 @@ namespace Metrics.Serilog.Tests
 
             report.Should().HaveCount(4);
 
-            report[0].Name.Should().Be(nameof(CounterValue.Count));
-            report[1].Name.Should().Be(nameof(value.Items));
-            report[2].Name.Should().Be(nameof(Unit));
-            report[3].Name.Should().Be(nameof(MetricTags.Tags));
+            report[0].Name.Should().Be(PropertyName.Count);
+            report[1].Name.Should().Be(PropertyName.Items);
+            report[2].Name.Should().Be(PropertyName.Unit);
+            report[3].Name.Should().Be(PropertyName.Tags);
         }
 
         [Test]
@@ -32,9 +31,9 @@ namespace Metrics.Serilog.Tests
 
             report.Should().HaveCount(3);
 
-            report[0].Name.Should().Be(nameof(GaugeValueSource.Value));
-            report[1].Name.Should().Be(nameof(Unit));
-            report[2].Name.Should().Be(nameof(MetricTags.Tags));
+            report[0].Name.Should().Be(PropertyName.Value);
+            report[1].Name.Should().Be(PropertyName.Unit);
+            report[2].Name.Should().Be(PropertyName.Tags);
         }
 
         [Test]
@@ -46,8 +45,8 @@ namespace Metrics.Serilog.Tests
 
             report.Should().HaveCount(4);
 
-            report[0].Name.Should().Be(nameof(HealthStatus.HasRegisteredChecks));
-            report[1].Name.Should().Be(nameof(HealthStatus.IsHealthy));
+            report[0].Name.Should().Be(PropertyName.HasRegisteredChecks);
+            report[1].Name.Should().Be(PropertyName.IsHealthy);
             report[2].Name.Should().Be(value.Results[0].Name);
             report[3].Name.Should().Be(value.Results[1].Name);
         }
@@ -61,24 +60,24 @@ namespace Metrics.Serilog.Tests
 
             report.Should().HaveCount(18);
 
-            report[0].Name.Should().Be(nameof(value.Count));
-            report[1].Name.Should().Be(nameof(value.LastUserValue));
-            report[2].Name.Should().Be(nameof(value.LastValue));
-            report[3].Name.Should().Be(nameof(value.Max));
-            report[4].Name.Should().Be(nameof(value.MaxUserValue));
-            report[5].Name.Should().Be(nameof(value.Mean));
-            report[6].Name.Should().Be(nameof(value.Median));
-            report[7].Name.Should().Be(nameof(value.Min));
-            report[8].Name.Should().Be(nameof(value.MinUserValue));
-            report[9].Name.Should().Be(nameof(value.Percentile75));
-            report[10].Name.Should().Be(nameof(value.Percentile95));
-            report[11].Name.Should().Be(nameof(value.Percentile98));
-            report[12].Name.Should().Be(nameof(value.Percentile99));
-            report[13].Name.Should().Be(nameof(value.Percentile999));
-            report[14].Name.Should().Be(nameof(value.SampleSize));
-            report[15].Name.Should().Be(nameof(value.StdDev));
-            report[16].Name.Should().Be(nameof(Unit));
-            report[17].Name.Should().Be(nameof(MetricTags.Tags));
+            report[0].Name.Should().Be(PropertyName.Count);
+            report[1].Name.Should().Be(PropertyName.LastUserValue);
+            report[2].Name.Should().Be(PropertyName.LastValue);
+            report[3].Name.Should().Be(PropertyName.Max);
+            report[4].Name.Should().Be(PropertyName.MaxUserValue);
+            report[5].Name.Should().Be(PropertyName.Mean);
+            report[6].Name.Should().Be(PropertyName.Median);
+            report[7].Name.Should().Be(PropertyName.Min);
+            report[8].Name.Should().Be(PropertyName.MinUserValue);
+            report[9].Name.Should().Be(PropertyName.Percentile75);
+            report[10].Name.Should().Be(PropertyName.Percentile95);
+            report[11].Name.Should().Be(PropertyName.Percentile98);
+            report[12].Name.Should().Be(PropertyName.Percentile99);
+            report[13].Name.Should().Be(PropertyName.Percentile999);
+            report[14].Name.Should().Be(PropertyName.SampleSize);
+            report[15].Name.Should().Be(PropertyName.StdDev);
+            report[16].Name.Should().Be(PropertyName.Unit);
+            report[17].Name.Should().Be(PropertyName.Tags);
         }
 
         [Test]
@@ -90,16 +89,16 @@ namespace Metrics.Serilog.Tests
 
             report.Should().HaveCount(10);
 
-            report[0].Name.Should().Be(nameof(value.Count));
-            report[1].Name.Should().Be(nameof(value.FifteenMinuteRate));
-            report[2].Name.Should().Be(nameof(value.FiveMinuteRate));
-            report[3].Name.Should().Be(nameof(value.MeanRate));
-            report[4].Name.Should().Be(nameof(value.OneMinuteRate));
-            report[5].Name.Should().Be(nameof(value.RateUnit));
-            report[6].Name.Should().Be(nameof(value.Items));
-            report[7].Name.Should().Be(nameof(Unit));
-            report[8].Name.Should().Be(nameof(MeterValueSource.RateUnit));
-            report[9].Name.Should().Be(nameof(MetricTags.Tags));
+            report[0].Name.Should().Be(PropertyName.Count);
+            report[1].Name.Should().Be(PropertyName.FifteenMinuteRate);
+            report[2].Name.Should().Be(PropertyName.FiveMinuteRate);
+            report[3].Name.Should().Be(PropertyName.MeanRate);
+            report[4].Name.Should().Be(PropertyName.OneMinuteRate);
+            report[5].Name.Should().Be(PropertyName.RateUnit);
+            report[6].Name.Should().Be(PropertyName.Items);
+            report[7].Name.Should().Be(PropertyName.Unit);
+            report[8].Name.Should().Be(PropertyName.RateUnit);
+            report[9].Name.Should().Be(PropertyName.Tags);
         }
 
         [Test]
@@ -111,14 +110,14 @@ namespace Metrics.Serilog.Tests
 
             report.Should().HaveCount(8);
 
-            report[0].Name.Should().Be(nameof(value.ActiveSessions));
-            report[1].Name.Should().Be(nameof(value.Histogram));
-            report[2].Name.Should().Be(nameof(value.Rate));
-            report[3].Name.Should().Be(nameof(value.TotalTime));
-            report[4].Name.Should().Be(nameof(Unit));
-            report[5].Name.Should().Be(nameof(TimerValueSource.RateUnit));
-            report[6].Name.Should().Be(nameof(TimerValueSource.DurationUnit));
-            report[7].Name.Should().Be(nameof(MetricTags.Tags));
+            report[0].Name.Should().Be(PropertyName.ActiveSessions);
+            report[1].Name.Should().Be(PropertyName.Histogram);
+            report[2].Name.Should().Be(PropertyName.Rate);
+            report[3].Name.Should().Be(PropertyName.TotalTime);
+            report[4].Name.Should().Be(PropertyName.Unit);
+            report[5].Name.Should().Be(PropertyName.RateUnit);
+            report[6].Name.Should().Be(PropertyName.DurationUnit);
+            report[7].Name.Should().Be(PropertyName.Tags);
         }
     }
 }

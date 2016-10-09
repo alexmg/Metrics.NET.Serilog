@@ -12,8 +12,8 @@ namespace Metrics.Serilog.Reports
         {
             var properties = value.BuildProperties()
                 .Concat(unit.BuildProperties())
-                .Concat(rateUnit.BuildProperties(nameof(TimerValueSource.RateUnit)))
-                .Concat(durationUnit.BuildProperties(nameof(TimerValueSource.DurationUnit)))
+                .Concat(rateUnit.BuildProperties(PropertyName.RateUnit))
+                .Concat(durationUnit.BuildProperties(PropertyName.DurationUnit))
                 .Concat(tags.BuildProperties());
 
             return properties;

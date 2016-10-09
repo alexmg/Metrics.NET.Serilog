@@ -7,7 +7,7 @@ namespace Metrics.Serilog.Reports.PropertyBuilders
     {
         internal static IEnumerable<LogEventProperty> BuildProperties(this Unit value)
         {
-            yield return new LogEventProperty(nameof(Unit), new ScalarValue(value.Name));
+            yield return new LogEventProperty(PropertyName.Unit, new ScalarValue(value.Name));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Metrics.Serilog.Reports.PropertyBuilders
             if (value.Tags.Length == 0) yield break;
 
             var tags = value.Tags.Select(t => new ScalarValue(t));
-            var tagProperty = new LogEventProperty(nameof(value.Tags), new SequenceValue(tags));
+            var tagProperty = new LogEventProperty(PropertyName.Tags, new SequenceValue(tags));
 
             yield return tagProperty;
         }

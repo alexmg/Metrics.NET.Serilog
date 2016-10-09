@@ -20,10 +20,10 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(2);
 
-            properties[0].Name.Should().Be(nameof(value.Count));
+            properties[0].Name.Should().Be(PropertyName.Count);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.Count);
 
-            properties[1].Name.Should().Be(nameof(value.Items));
+            properties[1].Name.Should().Be(PropertyName.Items);
             var itemsValue = properties[1].Value.As<StructureValue>();
 
             for (var i = 0; i < value.Items.Length; i++)
@@ -44,7 +44,7 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(1);
 
-            properties[0].Name.Should().Be(nameof(GaugeValueSource.Value));
+            properties[0].Name.Should().Be(PropertyName.Value);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value);
         }
 
@@ -69,11 +69,11 @@ namespace Metrics.Serilog.Tests
         [Theory]
         public void TimeUnitPropertyBuilder(TimeUnit timeUnit)
         {
-            var properties = timeUnit.BuildProperties(nameof(TimeUnit)).ToList();
+            var properties = timeUnit.BuildProperties("Foo").ToList();
 
             properties.Should().HaveCount(1);
 
-            properties[0].Name.Should().Be(nameof(TimeUnit));
+            properties[0].Name.Should().Be("Foo");
             properties[0].Value.As<ScalarValue>().Value.Should().Be(timeUnit);
         }
 
@@ -86,7 +86,7 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(1);
 
-            properties[0].Name.Should().Be(nameof(Unit));
+            properties[0].Name.Should().Be(PropertyName.Unit);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(unit.Name);
         }
 
@@ -101,10 +101,10 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(4);
 
-            properties[0].Name.Should().Be(nameof(value.HasRegisteredChecks));
+            properties[0].Name.Should().Be(PropertyName.HasRegisteredChecks);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.HasRegisteredChecks);
 
-            properties[1].Name.Should().Be(nameof(value.IsHealthy));
+            properties[1].Name.Should().Be(PropertyName.IsHealthy);
             properties[1].Value.As<ScalarValue>().Value.Should().Be(value.IsHealthy);
 
             properties[2].Name.Should().Be(result1.Name);
@@ -125,7 +125,7 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(1);
 
-            properties[0].Name.Should().Be(nameof(value.HasRegisteredChecks));
+            properties[0].Name.Should().Be(PropertyName.HasRegisteredChecks);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.HasRegisteredChecks);
         }
 
@@ -168,7 +168,7 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(1);
 
-            properties[0].Name.Should().Be(nameof(value.Tags));
+            properties[0].Name.Should().Be(PropertyName.Tags);
             var values = properties[0].Value.As<SequenceValue>();
             values.Elements.Should().HaveCount(3);
             values.Elements[0].As<ScalarValue>().Value.Should().Be(value.Tags[0]);
@@ -223,18 +223,18 @@ namespace Metrics.Serilog.Tests
 
             properties.Should().HaveCount(4);
 
-            properties[0].Name.Should().Be(nameof(value.ActiveSessions));
+            properties[0].Name.Should().Be(PropertyName.ActiveSessions);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.ActiveSessions);
 
-            properties[1].Name.Should().Be(nameof(value.Histogram));
+            properties[1].Name.Should().Be(PropertyName.Histogram);
             var histogramValue = properties[1].Value.As<StructureValue>();
             AssertHistogramValue(histogramValue.Properties, value.Histogram);
 
-            properties[2].Name.Should().Be(nameof(value.Rate));
+            properties[2].Name.Should().Be(PropertyName.Rate);
             var rateValue = properties[2].Value.As<StructureValue>();
             AssertMeterValue(rateValue.Properties, value.Rate);
 
-            properties[3].Name.Should().Be(nameof(value.TotalTime));
+            properties[3].Name.Should().Be(PropertyName.TotalTime);
             properties[3].Value.As<ScalarValue>().Value.Should().Be(value.TotalTime);
         }
 
@@ -242,10 +242,10 @@ namespace Metrics.Serilog.Tests
         {
             properties.Should().HaveCount(2);
 
-            properties[0].Name.Should().Be(nameof(value.Count));
+            properties[0].Name.Should().Be(PropertyName.Count);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.Count);
 
-            properties[1].Name.Should().Be(nameof(value.Percent));
+            properties[1].Name.Should().Be(PropertyName.Percent);
             properties[1].Value.As<ScalarValue>().Value.Should().Be(value.Percent);
         }
 
@@ -253,10 +253,10 @@ namespace Metrics.Serilog.Tests
         {
             properties.Should().HaveCount(2);
 
-            properties[0].Name.Should().Be(nameof(HealthCheckResult.IsHealthy));
+            properties[0].Name.Should().Be(PropertyName.IsHealthy);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.Check.IsHealthy);
 
-            properties[1].Name.Should().Be(nameof(HealthCheckResult.Message));
+            properties[1].Name.Should().Be(PropertyName.Message);
             properties[1].Value.As<ScalarValue>().Value.Should().Be(value.Check.Message);
         }
 
@@ -264,52 +264,52 @@ namespace Metrics.Serilog.Tests
         {
             properties.Should().HaveCount(16);
 
-            properties[0].Name.Should().Be(nameof(value.Count));
+            properties[0].Name.Should().Be(PropertyName.Count);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.Count);
 
-            properties[1].Name.Should().Be(nameof(value.LastUserValue));
+            properties[1].Name.Should().Be(PropertyName.LastUserValue);
             properties[1].Value.As<ScalarValue>().Value.Should().Be(value.LastUserValue);
 
-            properties[2].Name.Should().Be(nameof(value.LastValue));
+            properties[2].Name.Should().Be(PropertyName.LastValue);
             properties[2].Value.As<ScalarValue>().Value.Should().Be(value.LastValue);
 
-            properties[3].Name.Should().Be(nameof(value.Max));
+            properties[3].Name.Should().Be(PropertyName.Max);
             properties[3].Value.As<ScalarValue>().Value.Should().Be(value.Max);
 
-            properties[4].Name.Should().Be(nameof(value.MaxUserValue));
+            properties[4].Name.Should().Be(PropertyName.MaxUserValue);
             properties[4].Value.As<ScalarValue>().Value.Should().Be(value.MaxUserValue);
 
-            properties[5].Name.Should().Be(nameof(value.Mean));
+            properties[5].Name.Should().Be(PropertyName.Mean);
             properties[5].Value.As<ScalarValue>().Value.Should().Be(value.Mean);
 
-            properties[6].Name.Should().Be(nameof(value.Median));
+            properties[6].Name.Should().Be(PropertyName.Median);
             properties[6].Value.As<ScalarValue>().Value.Should().Be(value.Median);
 
-            properties[7].Name.Should().Be(nameof(value.Min));
+            properties[7].Name.Should().Be(PropertyName.Min);
             properties[7].Value.As<ScalarValue>().Value.Should().Be(value.Min);
 
-            properties[8].Name.Should().Be(nameof(value.MinUserValue));
+            properties[8].Name.Should().Be(PropertyName.MinUserValue);
             properties[8].Value.As<ScalarValue>().Value.Should().Be(value.MinUserValue);
 
-            properties[9].Name.Should().Be(nameof(value.Percentile75));
+            properties[9].Name.Should().Be(PropertyName.Percentile75);
             properties[9].Value.As<ScalarValue>().Value.Should().Be(value.Percentile75);
 
-            properties[10].Name.Should().Be(nameof(value.Percentile95));
+            properties[10].Name.Should().Be(PropertyName.Percentile95);
             properties[10].Value.As<ScalarValue>().Value.Should().Be(value.Percentile95);
 
-            properties[11].Name.Should().Be(nameof(value.Percentile98));
+            properties[11].Name.Should().Be(PropertyName.Percentile98);
             properties[11].Value.As<ScalarValue>().Value.Should().Be(value.Percentile98);
 
-            properties[12].Name.Should().Be(nameof(value.Percentile99));
+            properties[12].Name.Should().Be(PropertyName.Percentile99);
             properties[12].Value.As<ScalarValue>().Value.Should().Be(value.Percentile99);
 
-            properties[13].Name.Should().Be(nameof(value.Percentile999));
+            properties[13].Name.Should().Be(PropertyName.Percentile999);
             properties[13].Value.As<ScalarValue>().Value.Should().Be(value.Percentile999);
 
-            properties[14].Name.Should().Be(nameof(value.SampleSize));
+            properties[14].Name.Should().Be(PropertyName.SampleSize);
             properties[14].Value.As<ScalarValue>().Value.Should().Be(value.SampleSize);
 
-            properties[15].Name.Should().Be(nameof(value.StdDev));
+            properties[15].Name.Should().Be(PropertyName.StdDev);
             properties[15].Value.As<ScalarValue>().Value.Should().Be(value.StdDev);
         }
 
@@ -317,27 +317,27 @@ namespace Metrics.Serilog.Tests
         {
             properties.Should().HaveCount(6 + (value.Items.Length > 0 ? 1 : 0));
 
-            properties[0].Name.Should().Be(nameof(value.Count));
+            properties[0].Name.Should().Be(PropertyName.Count);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(value.Count);
 
-            properties[1].Name.Should().Be(nameof(value.FifteenMinuteRate));
+            properties[1].Name.Should().Be(PropertyName.FifteenMinuteRate);
             properties[1].Value.As<ScalarValue>().Value.Should().Be(value.FifteenMinuteRate);
 
-            properties[2].Name.Should().Be(nameof(value.FiveMinuteRate));
+            properties[2].Name.Should().Be(PropertyName.FiveMinuteRate);
             properties[2].Value.As<ScalarValue>().Value.Should().Be(value.FiveMinuteRate);
 
-            properties[3].Name.Should().Be(nameof(value.MeanRate));
+            properties[3].Name.Should().Be(PropertyName.MeanRate);
             properties[3].Value.As<ScalarValue>().Value.Should().Be(value.MeanRate);
 
-            properties[4].Name.Should().Be(nameof(value.OneMinuteRate));
+            properties[4].Name.Should().Be(PropertyName.OneMinuteRate);
             properties[4].Value.As<ScalarValue>().Value.Should().Be(value.OneMinuteRate);
 
-            properties[5].Name.Should().Be(nameof(value.RateUnit));
+            properties[5].Name.Should().Be(PropertyName.RateUnit);
             properties[5].Value.As<ScalarValue>().Value.Should().Be(value.RateUnit);
 
             if (value.Items.Length == 0) return;
 
-            properties[6].Name.Should().Be(nameof(value.Items));
+            properties[6].Name.Should().Be(PropertyName.Items);
             var itemsValue = properties[6].Value.As<StructureValue>();
 
             for (var i = 0; i < value.Items.Length; i++)
@@ -353,25 +353,25 @@ namespace Metrics.Serilog.Tests
         {
             properties.Should().HaveCount(7);
 
-            properties[0].Name.Should().Be(nameof(item.Value.Count));
+            properties[0].Name.Should().Be(PropertyName.Count);
             properties[0].Value.As<ScalarValue>().Value.Should().Be(item.Value.Count);
 
-            properties[1].Name.Should().Be(nameof(item.Value.FifteenMinuteRate));
+            properties[1].Name.Should().Be(PropertyName.FifteenMinuteRate);
             properties[1].Value.As<ScalarValue>().Value.Should().Be(item.Value.FifteenMinuteRate);
 
-            properties[2].Name.Should().Be(nameof(item.Value.FiveMinuteRate));
+            properties[2].Name.Should().Be(PropertyName.FiveMinuteRate);
             properties[2].Value.As<ScalarValue>().Value.Should().Be(item.Value.FiveMinuteRate);
 
-            properties[3].Name.Should().Be(nameof(item.Value.MeanRate));
+            properties[3].Name.Should().Be(PropertyName.MeanRate);
             properties[3].Value.As<ScalarValue>().Value.Should().Be(item.Value.MeanRate);
 
-            properties[4].Name.Should().Be(nameof(item.Value.OneMinuteRate));
+            properties[4].Name.Should().Be(PropertyName.OneMinuteRate);
             properties[4].Value.As<ScalarValue>().Value.Should().Be(item.Value.OneMinuteRate);
 
-            properties[5].Name.Should().Be(nameof(item.Value.RateUnit));
+            properties[5].Name.Should().Be(PropertyName.RateUnit);
             properties[5].Value.As<ScalarValue>().Value.Should().Be(item.Value.RateUnit);
 
-            properties[6].Name.Should().Be(nameof(item.Percent));
+            properties[6].Name.Should().Be(PropertyName.Percent);
             properties[6].Value.As<ScalarValue>().Value.Should().Be(item.Percent);
         }
     }

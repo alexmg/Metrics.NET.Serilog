@@ -12,7 +12,7 @@ namespace Metrics.Serilog.Reports.PropertyBuilders
             {
                 yield return property;
             }
-            yield return new LogEventProperty(nameof(value.Percent), new ScalarValue(value.Percent));
+            yield return new LogEventProperty(PropertyName.Percent, new ScalarValue(value.Percent));
         }
     }
 }

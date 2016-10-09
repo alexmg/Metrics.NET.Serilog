@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Metrics.MetricData;
 using Metrics.Serilog.Reports;
 using Metrics.Reporters;
@@ -86,6 +87,9 @@ namespace Metrics.Serilog
 
         private void WriteLogEvent(string name, LogEventLevel logEventLevel, IEnumerable<LogEventProperty> properties)
         {
+            var metricProperty = new LogEventProperty(PropertyName.Metric, new ScalarValue(name));
+            properties = properties.Concat(new[] {metricProperty});
+
             var timestamp = new DateTimeOffset(CurrentContextTimestamp);
             var messageTemplate = _messageTemplateParser.Parse(name);
             var logEvent = new LogEvent(timestamp, logEventLevel, null, messageTemplate, properties);
